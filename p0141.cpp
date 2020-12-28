@@ -13,17 +13,20 @@ class Solution
 public:
     bool hasCycle(ListNode *head)
     {
-        unordered_map<ListNode *, bool> hash;
-        auto node = head;
-        while (node && node->next != NULL)
+        if (head == NULL)
         {
-            if (hash.find(node) != hash.end())
-            {
-                return true;
-            }
-            hash[node] = true;
-            node = node->next;
+            return false;
         }
-        return false;
+        auto slow = head, fast = head->next;
+        while (slow != fast)
+        {
+            if (fast == NULL || fast->next == NULL)
+            {
+                return false;
+            }
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        return true;
     }
 };
