@@ -30,18 +30,10 @@ private:
 public:
     bool isSubtree(TreeNode *s, TreeNode *t)
     {
-        if (s == NULL && t == NULL)
-        {
-            return true;
-        }
-        if (s == NULL || t == NULL)
+        if (s == NULL ^ t == NULL)
         {
             return false;
         }
-        if (s->val == t->val && isSame(s->left, t->left) && isSame(s->right, t->right))
-        {
-            return true;
-        }
-        return isSubtree(s->left, t) || isSubtree(s->right, t);
+        return isSame(s, t) || isSubtree(s->left, t) || isSubtree(s->right, t);
     }
 };
