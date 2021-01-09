@@ -1,4 +1,4 @@
-#include <bits/stdc++.h>
+#include <vector>
 using namespace std;
 
 class Solution
@@ -6,42 +6,22 @@ class Solution
 public:
     vector<int> productExceptSelf(vector<int> &nums)
     {
-        int totalProduct = 1, zeros = 0;
-        for (auto num : nums)
+        if (nums.size() <= 1)
         {
-            if (num)
-            {
-                totalProduct *= num;
-            }
-            else
-            {
-                zeros++;
-            }
+            return nums;
         }
-        if (zeros >= 2)
+        vector<int> product(nums.size(), 1);
+        int leftProduct = 1, rightProduct = 1;
+        for (int i = 1; i < (int)nums.size(); i++)
         {
-            for (auto &num : nums)
-            {
-                num = 0;
-            }
+            leftProduct *= nums.at(i - 1);
+            product.at(i) *= leftProduct;
         }
-        else if (zeros == 1)
+        for (int i = nums.size() - 2; i >= 0; i--)
         {
-            for (auto &num : nums)
-            {
-                if (num)
-                    num = 0;
-                else
-                    num = totalProduct;
-            }
+            rightProduct *= nums.at(i + 1);
+            product.at(i) *= rightProduct;
         }
-        else
-        {
-            for (auto &num : nums)
-            {
-                num = totalProduct / num;
-            }
-        }
-        return nums;
+        return product;
     }
 };
