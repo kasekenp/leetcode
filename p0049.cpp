@@ -1,3 +1,6 @@
+// Runtime: 36 ms, faster than 80.49% of C++ online submissions for Group Anagrams.
+// Memory Usage: 18.2 MB, less than 96.05% of C++ online submissions for Group Anagrams.
+
 #include <algorithm>
 #include <string>
 #include <unordered_map>
@@ -9,17 +12,21 @@ class Solution
 public:
     vector<vector<string>> groupAnagrams(vector<string> &strs)
     {
-        unordered_map<string, vector<string>> hash;
+        vector<vector<string>> ret;
+        unordered_map<string, int> hash;
         for (auto str : strs)
         {
             auto sortedStr = str;
             sort(sortedStr.begin(), sortedStr.end());
-            hash[sortedStr].push_back(str);
-        }
-        vector<vector<string>> ret;
-        for (auto p : hash)
-        {
-            ret.push_back(p.second);
+            if (hash.find(sortedStr) == hash.end())
+            {
+                hash[sortedStr] = (int)ret.size();
+                ret.push_back({str});
+            }
+            else
+            {
+                ret.at(hash[sortedStr]).push_back(str);
+            }
         }
         return ret;
     }
