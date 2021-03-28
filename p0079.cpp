@@ -8,7 +8,7 @@ using namespace std;
 class Solution
 {
 private:
-    bool dfs(vector<vector<char>> &board, string &word, vector<bool> &visited, int i, int j, int idx)
+    bool dfs(vector<vector<char>> &board, string &word, vector<vector<bool>> &visited, int i, int j, int idx)
     {
         if (visited[i][j])
         {
@@ -28,11 +28,11 @@ private:
         int dy[4] = {-1, 0, 0, 1};
         for (int k = 0; k < 4; k++)
         {
-            if (i + dy[i] < 0 || i + dy[i] >= board.size() || j + dx[i] < 0 || j + dx[i] >= board[0].size())
+            if (i + dy[k] < 0 || i + dy[k] >= board.size() || j + dx[k] < 0 || j + dx[k] >= board[0].size())
             {
                 continue;
             }
-            res |= dfs(board, word, visited, i + dy[i], j + dx[i], idx + 1);
+            res |= dfs(board, word, visited, i + dy[k], j + dx[k], idx + 1);
         }
         visited[i][j] = false;
         return res;
